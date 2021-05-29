@@ -30,6 +30,21 @@ routes.delete('/user', celebrate({
   })
 }), UserController.delete);
 
+routes.put('/user', celebrate({
+  [Segments.BODY]: Joi.object().keys({
+    id: Joi.number().required(),
+    name: Joi.string().required(),
+    email: Joi.string().required().email(),
+    address: Joi.string().required(),
+    phone: Joi.string().required(),
+    status: Joi.string().required(),
+    role: Joi.string().required(),
+    description: Joi.string().required(),
+    type: Joi.string().required(),
+    objective: Joi.string().required()
+  })
+}) ,UserController.update);
+
 //----------------- BOOK ROUTES -------------
 routes.get('/books', celebrate({
   [Segments.QUERY]: Joi.object().keys({
