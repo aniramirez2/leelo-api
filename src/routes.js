@@ -24,9 +24,9 @@ routes.post('/user', celebrate({
   })
 }) ,UserController.create);
 
-routes.delete('/user', celebrate({
+routes.delete('/user/:id', celebrate({
   [Segments.PARAMS]: Joi.object().keys({
-    id: Joi.number().required()
+    id: Joi.number().required(),
   })
 }), UserController.delete);
 
@@ -61,7 +61,7 @@ routes.post('/book', celebrate({
     pages: Joi.string().required(),
     language: Joi.string().required(),
     review: Joi.string().required(),
-    score: Joi.float().required(),
+    score: Joi.number().required(),
     editorial: Joi.string().required(),
     bookLayer: Joi.string().required(),
   })}), BookController.create);
@@ -82,7 +82,7 @@ routes.put('/book', celebrate({
     pages: Joi.string().required(),
     language: Joi.string().required(),
     review: Joi.string().required(),
-    score: Joi.float().required(),
+    score: Joi.number().required(),
     editorial: Joi.string().required(),
     bookLayer: Joi.string().required(),
   })}), BookController.create);
