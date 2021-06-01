@@ -33,7 +33,7 @@ module.exports = {
       .where('id', id)
       .first();
 
-    if (user != id) {
+    if (user.id != id) {
       return response.status(401).json({ error: 'operation not permitted.' });
     }
     await connection('user').where('id', id).delete();
