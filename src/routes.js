@@ -60,6 +60,10 @@ routes.post('/book', celebrate({
     status: Joi.string().required(),
     pages: Joi.string().required(),
     language: Joi.string().required(),
+    review: Joi.string().required(),
+    score: Joi.float().required(),
+    editorial: Joi.string().required(),
+    bookLayer: Joi.string().required(),
   })}), BookController.create);
 
 routes.delete('/book', celebrate({
@@ -67,6 +71,21 @@ routes.delete('/book', celebrate({
     id: Joi.number().required()
   })
 }), BookController.delete);
+
+routes.put('/book', celebrate({
+  [Segments.BODY]: Joi.object().keys({
+    id: Joi.number().required(),
+    title: Joi.string().required(),
+    author: Joi.string().required(),
+    genre: Joi.string().required(),
+    status: Joi.string().required(),
+    pages: Joi.string().required(),
+    language: Joi.string().required(),
+    review: Joi.string().required(),
+    score: Joi.float().required(),
+    editorial: Joi.string().required(),
+    bookLayer: Joi.string().required(),
+  })}), BookController.create);
 
 //------------ PAYMENTS ROUTES ----------
 routes.get('/payments', celebrate({

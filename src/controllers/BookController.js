@@ -2,34 +2,35 @@ const connection = require('../database/connection');
 
 module.exports = {
   async create(request, response) {
-    const { title, author, genre, status, pages, language } = request.body;
+    const { title, author, genre, status, pages, language, review, score, editorial, bookLayer } = request.body;
 
-    const [id] = await connection('books').insert({
+    const [id] = await connection('book').insert({
       title,
       author,
       genre,
       status,
       pages,
-      language
+      language,
+      review,
+      score,
+      editorial,
+      bookLayer
     });
+
     return response.json({ id })
+
   },
 
   async index(request, response) {
-    const { page = 1 } = request.query;
-    const [count] = await connection('books').count();
-    const books = await connection('books')
-      .limit(5)
-      .offset((page -1 ) * 5)
+    const books = await connection('book')
       .select('*');
-    response.header('X-Total-Count', count['count(*)'])
     return response.json(books);
   },
 
-  async delete(rquest, response) {
+  async delete(request, response) {
     const { id } = request.params;
 
-    const book = await connection('books')
+    const book = await connection('book')
       .where('id', id)
       .first()
 
@@ -38,5 +39,23 @@ module.exports = {
     }
     await connection('books').where('id', id).delete();
     return response.status(204).send();
-  }
+  },
+
+  async update(request, response) {
+    const { id, title, author, genre, status, pages, language, review, score, editorial, bookLayer} = request.body;
+
+    const reponse = await connection('book').update({
+      title,
+      author,
+      genre,
+      status,
+      pages,
+      language,
+      review,
+      score,
+      editorial,
+      bookLayer
+    }).where({id});
+    return response.json({ reponse })
+  },
 }
